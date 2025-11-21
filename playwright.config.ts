@@ -3,6 +3,12 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
 
+  // Timeout settings
+  timeout: 30000, // 30s max per test
+  expect: {
+    timeout: 5000 // 5s for assertions
+  },
+
   // Run tests in parallel
   fullyParallel: true,
 
@@ -21,6 +27,10 @@ export default defineConfig({
   use: {
     // Base URL to use in actions like `await page.goto('/')`
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
+
+    // Action timeouts (reduced for faster failures)
+    actionTimeout: 10000, // 10s for actions like click
+    navigationTimeout: 30000, // 30s for page loads
 
     // Collect trace when retrying the failed test
     trace: 'on-first-retry',
