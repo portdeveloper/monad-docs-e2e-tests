@@ -44,10 +44,14 @@ jobs:
 
       - name: Start docs site
         working-directory: monad-docs
-        run: npm start &
+        run: |
+          npm start > /tmp/docusaurus.log 2>&1 &
+          echo $! > /tmp/docusaurus.pid
+          sleep 5
 
       - name: Wait for docs site
-        run: npx wait-on http://localhost:3000 --timeout 60000
+        run: |
+          npx wait-on http://localhost:3000 --timeout 90000 || (echo "Docusaurus logs:" && cat /tmp/docusaurus.log && exit 1)
 
       - name: Run tests
         working-directory: monad-docs-e2e-tests
