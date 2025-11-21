@@ -8,6 +8,10 @@ on:
         required: false
         type: string
         default: 'main'
+    secrets:
+      ALGOLIA_API_KEY:
+        required: true
+        description: 'Algolia API key for Docusaurus'
 
 jobs:
   test:
@@ -45,7 +49,7 @@ jobs:
       - name: Start docs site
         working-directory: monad-docs
         env:
-          ALGOLIA_API_KEY: "dummy-key-for-testing"
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
         run: |
           npm start > /tmp/docusaurus.log 2>&1 &
           echo $! > /tmp/docusaurus.pid
