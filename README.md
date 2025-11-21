@@ -37,17 +37,18 @@ name: E2E Tests
 
 on:
   pull_request:
-  push:
-    branches: [main]
+    types: [opened, labeled, synchronize]
+  workflow_dispatch:
 
 jobs:
   e2e:
+    if: contains(github.event.pull_request.labels.*.name, 'e2e') || github.event_name == 'workflow_dispatch'
     uses: portdeveloper/monad-docs-e2e-tests/.github/workflows/ci.yml@main
     with:
       docs_ref: ${{ github.head_ref || github.ref }}
 ```
 
-This calls the reusable workflow in this repo, keeping your docs repo clean.
+**Usage:** Add the `e2e` label to any PR to trigger tests, or run manually from Actions tab.
 
 ## Troubleshooting
 
