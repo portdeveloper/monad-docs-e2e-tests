@@ -28,6 +28,27 @@ Test production:
 BASE_URL=https://docs.monad.xyz npm test
 ```
 
+## CI Setup
+
+Add this minimal workflow to your docs repo at `.github/workflows/e2e.yml`:
+
+```yaml
+name: E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  e2e:
+    uses: portdeveloper/monad-docs-e2e-tests/.github/workflows/ci.yml@main
+    with:
+      docs_ref: ${{ github.head_ref || github.ref }}
+```
+
+This calls the reusable workflow in this repo, keeping your docs repo clean.
+
 ## Troubleshooting
 
 - Ensure docs site runs at `http://localhost:3000`

@@ -1,0 +1,15 @@
+# Add this file to portdeveloper/monad-docs/.github/workflows/e2e.yml
+# This is the minimal file you add to your docs repo
+
+name: E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  e2e:
+    uses: portdeveloper/monad-docs-e2e-tests/.github/workflows/ci.yml@main
+    with:
+      docs_ref: ${{ github.head_ref || github.ref }}
