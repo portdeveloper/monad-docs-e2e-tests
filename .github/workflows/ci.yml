@@ -44,6 +44,8 @@ jobs:
 
       - name: Start docs site
         working-directory: monad-docs
+        env:
+          ALGOLIA_API_KEY: "dummy-key-for-testing"
         run: |
           npm start > /tmp/docusaurus.log 2>&1 &
           echo $! > /tmp/docusaurus.pid
